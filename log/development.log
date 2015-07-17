@@ -5655,3 +5655,969 @@ Processing by ArticlesController#index as HTML
   [1m[36mArticle Load (0.2ms)[0m  [1mSELECT "articles".* FROM "articles"[0m
   Rendered articles/index.html.erb within layouts/application (1.8ms)
 Completed 200 OK in 44ms (Views: 43.5ms | ActiveRecord: 0.2ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateComments (20150717150642)
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36m (0.7ms)[0m  [1mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "author_name" varchar, "body" text, "article_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "index_comments_on_article_id" ON "comments" ("article_id")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150717150642"]]
+  [1m[36m (2.2ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_comments_on_article_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_comments_on_article_id' AND type='index'
+[0m
+  [1m[36mArticle Load (0.3ms)[0m  [1mSELECT  "articles".* FROM "articles"  ORDER BY "articles"."id" ASC LIMIT 1[0m
+  [1m[35mComment Load (0.3ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 1]]
+  [1m[36m (0.3ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  INSERT INTO "comments" ("article_id", "author_name", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["article_id", 1], ["author_name", "Daffy Duck"], ["body", "I think this article is thhhh-thhh-thuupid!"], ["created_at", "2015-07-17 15:17:05.551545"], ["updated_at", "2015-07-17 15:17:05.551545"]]
+  [1m[36m (2.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "comments" ("author_name", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["author_name", "Chewbacca"], ["body", "RAWR!"], ["article_id", 1], ["created_at", "2015-07-17 15:17:38.708052"], ["updated_at", "2015-07-17 15:17:38.708052"]]
+  [1m[35m (2.2ms)[0m  commit transaction
+
+
+Started GET "/articles/1" for ::1 at 2015-07-17 11:24:44 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mArticle Load (0.3ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mComment Load (0.3ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 1]]
+  Rendered articles/show.html.erb within layouts/application (46.5ms)
+Completed 500 Internal Server Error in 105ms (ActiveRecord: 1.4ms)
+
+ActionView::Template::Error (Missing partial articles/_comments with {:locale=>[:en], :formats=>[:html, :xml], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/Volumes/DATA/the_odin_project/blogger/app/views"
+):
+    2: <p> <%= @article.body %> </p>
+    3: 
+    4: <h3>Comments</h3>
+    5: <%= render partial: 'articles/comments', collection: @article.comments %>
+    6: 
+    7: <br><br>
+    8: <%= link_to "Link to Article List", articles_path %>
+  app/views/articles/show.html.erb:5:in `_app_views_articles_show_html_erb__2135536514004283541_70152845504320'
+
+
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (11.8ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (5.0ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (122.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (97.9ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (217.9ms)
+
+
+Started GET "/articles/1" for ::1 at 2015-07-17 11:24:45 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mComment Load (0.2ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 1]]
+  Rendered articles/show.html.erb within layouts/application (10.6ms)
+Completed 500 Internal Server Error in 19ms (ActiveRecord: 0.4ms)
+
+ActionView::Template::Error (Missing partial articles/_comments with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/Volumes/DATA/the_odin_project/blogger/app/views"
+):
+    2: <p> <%= @article.body %> </p>
+    3: 
+    4: <h3>Comments</h3>
+    5: <%= render partial: 'articles/comments', collection: @article.comments %>
+    6: 
+    7: <br><br>
+    8: <%= link_to "Link to Article List", articles_path %>
+  app/views/articles/show.html.erb:5:in `_app_views_articles_show_html_erb__2135536514004283541_70152842873120'
+
+
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (11.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (4.9ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (111.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (94.0ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.7ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (212.8ms)
+
+
+Started GET "/articles/1" for ::1 at 2015-07-17 11:25:22 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mArticle Load (0.3ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mComment Load (0.2ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 1]]
+  Rendered articles/show.html.erb within layouts/application (19.7ms)
+Completed 500 Internal Server Error in 44ms (ActiveRecord: 1.6ms)
+
+ActionView::Template::Error (Missing partial articles/_comments with {:locale=>[:en], :formats=>[:html, :xml], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/Volumes/DATA/the_odin_project/blogger/app/views"
+):
+    2: <p> <%= @article.body %> </p>
+    3: 
+    4: <h3>Comments</h3>
+    5: <%= render partial: 'articles/comments', collection: @article.comments %>
+    6: 
+    7: <br><br>
+    8: <%= link_to "Link to Article List", articles_path %>
+  app/views/articles/show.html.erb:5:in `_app_views_articles_show_html_erb__2135536514004283541_70152856010240'
+
+
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (11.3ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (4.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (122.1ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (103.9ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (232.9ms)
+
+
+Started GET "/articles/1" for ::1 at 2015-07-17 11:25:23 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mComment Load (0.2ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 1]]
+  Rendered articles/show.html.erb within layouts/application (7.2ms)
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 0.3ms)
+
+ActionView::Template::Error (Missing partial articles/_comments with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/Volumes/DATA/the_odin_project/blogger/app/views"
+):
+    2: <p> <%= @article.body %> </p>
+    3: 
+    4: <h3>Comments</h3>
+    5: <%= render partial: 'articles/comments', collection: @article.comments %>
+    6: 
+    7: <br><br>
+    8: <%= link_to "Link to Article List", articles_path %>
+  app/views/articles/show.html.erb:5:in `_app_views_articles_show_html_erb__2135536514004283541_70152844728080'
+
+
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (11.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (4.8ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (114.1ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (96.1ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (1.3ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (215.0ms)
+
+
+Started GET "/articles/1" for ::1 at 2015-07-17 11:25:56 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mComment Load (0.2ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 1]]
+  Rendered articles/_comment.html.erb (0.7ms)
+  Rendered articles/show.html.erb within layouts/application (6.8ms)
+Completed 200 OK in 403ms (Views: 401.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 11:34:05 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 4]]
+  [1m[36mComment Load (0.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered articles/show.html.erb within layouts/application (11.9ms)
+Completed 200 OK in 435ms (Views: 433.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles" for ::1 at 2015-07-17 11:34:11 -0400
+Processing by ArticlesController#index as HTML
+  [1m[35mArticle Load (0.3ms)[0m  SELECT "articles".* FROM "articles"
+  Rendered articles/index.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 84ms (Views: 83.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/10" for ::1 at 2015-07-17 11:34:12 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 10]]
+  [1m[35mComment Load (0.5ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 10]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered articles/show.html.erb within layouts/application (4.8ms)
+Completed 200 OK in 94ms (Views: 92.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/articles/11" for ::1 at 2015-07-17 11:34:16 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 11]]
+  [1m[35mComment Load (0.1ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 11]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered articles/show.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 62ms (Views: 60.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/9" for ::1 at 2015-07-17 11:34:22 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 9]]
+  [1m[35mComment Load (0.3ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 9]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered articles/show.html.erb within layouts/application (4.7ms)
+Completed 200 OK in 79ms (Views: 76.8ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/articles/11" for ::1 at 2015-07-17 11:34:41 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 11]]
+  [1m[35mComment Load (0.1ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 11]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered articles/show.html.erb within layouts/application (4.9ms)
+Completed 200 OK in 79ms (Views: 77.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/11/edit" for ::1 at 2015-07-17 11:34:42 -0400
+Processing by ArticlesController#edit as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 11]]
+  Rendered articles/_form.html.erb (52.3ms)
+  Rendered articles/edit.html.erb within layouts/application (70.0ms)
+Completed 200 OK in 479ms (Views: 476.5ms | ActiveRecord: 0.2ms)
+
+
+Started PATCH "/articles/11" for ::1 at 2015-07-17 11:34:48 -0400
+Processing by ArticlesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"XqUENx/9zPL5yVbq5/f+nVeb49qDHcpPTJN90t4ZzAHLezBr+mNOQJRxunGtbxts3RX3ZDQcxhc8VysZOmQhmw==", "article"=>{"title"=>"Where It All Began For Juan Castillo", "body"=>"Should you ever go to the Under Armour Performance Center at 4 a.m., it is certain you will see at least one light on.\r\n\r\nThat light turns on when Offensive Line Coach Juan Castillo gets to the office every morning.\r\n\r\nCastillo doesn’t know what it’s like not to get to work before sunrise.\r\n\r\nFrom an early age, Castillo learned what having a strong work ethic entails. It began when his dad, a shrimper, would wake him up at 3:30 a.m. to go to the fish house. Castillo didn’t have much of a choice in the matter, and he didn’t try to avoid the early morning assignment. \r\nCastillo doesn’t know what it’s like not to get to work before sunrise.\r\n\r\nFrom an early age, Castillo learned what having a strong work ethic entails. It began when his dad, a shrimper, would wake him up at 3:30 a.m. to go to the fish house. Castillo didn’t have much of a choice in the matter, and he didn’t try to avoid the early morning assignment. \r\n\r\n“You don’t really ask, you just do,” he said.\r\n\r\nCastillo doesn’t just carry this attitude on the football field; it has become his motto in all aspects of his life.\r\n\r\nBoth of his parents came to the United States from Mexico at the ages of 13 and 14 and went straight to work.\r\n\r\nWhile most kids enter the sixth grade with teenage excitement, Castillo realized that he would need to become an adult quicker than most one morning in the summer of 1970.\r\n\r\nCastillo’s dad went to work and did not come home that night.  He fell off the shrimp boat, and drowned. With two younger sisters to take care of, Castillo became the man of the house at age 11.\r\n\r\nCastillo’s mother became the sole financial provider for the family. She worked two jobs, one as a maid and the other clearing dishes at a restaurant. \r\n\r\nCastillo credits his mother for two important values: his work ethic and teaching him the importance of treating people with respect.\r\n\r\n“She was always really nice to everybody,” he said.\r\n\r\nGrowing up in the small town of Port Isabel, Texas, kids start playing football in the streets from a young age. This is where Castillo was introduced to the game of football; the game that changed his life.\r\n\r\nCastillo attended Port Isabel High School where he played on the football team as a linebacker and tight end. He wasn’t the fastest, strongest, or most talented, but he developed a work ethic that pushed him to become the first person in his family to ever graduate high school.\r\n\r\nCastillo knew he wanted to play college football, but the only school that offered him a scholarship was Monterrey Tech in Monterrey, Mexico. Although not ideal, he saw it as an opportunity.\r\n\r\nHe became a starting linebacker, but after his freshman year, the school ended its football program. Castillo’s career at Monterrey Tech was over, but he was not ready to hang up the cleats just yet.\r\n\r\nWhen he returned to Port Isabel, he reached out to his high school football coach, a former player at Texas A&M- Kingsville, named Fred Jonas, the head coach at Texas A&M-Kingsville. Jonas agreed to give Castillo a tryout.\r\n\r\n"}, "commit"=>"Update Article", "id"=>"11"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 11]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  UPDATE "articles" SET "body" = ?, "updated_at" = ? WHERE "articles"."id" = ?  [["body", "Should you ever go to the Under Armour Performance Center at 4 a.m., it is certain you will see at least one light on.\r\n\r\nThat light turns on when Offensive Line Coach Juan Castillo gets to the office every morning.\r\n\r\nCastillo doesn’t know what it’s like not to get to work before sunrise.\r\n\r\nFrom an early age, Castillo learned what having a strong work ethic entails. It began when his dad, a shrimper, would wake him up at 3:30 a.m. to go to the fish house. Castillo didn’t have much of a choice in the matter, and he didn’t try to avoid the early morning assignment. \r\nCastillo doesn’t know what it’s like not to get to work before sunrise.\r\n\r\nFrom an early age, Castillo learned what having a strong work ethic entails. It began when his dad, a shrimper, would wake him up at 3:30 a.m. to go to the fish house. Castillo didn’t have much of a choice in the matter, and he didn’t try to avoid the early morning assignment. \r\n\r\n“You don’t really ask, you just do,” he said.\r\n\r\nCastillo doesn’t just carry this attitude on the football field; it has become his motto in all aspects of his life.\r\n\r\nBoth of his parents came to the United States from Mexico at the ages of 13 and 14 and went straight to work.\r\n\r\nWhile most kids enter the sixth grade with teenage excitement, Castillo realized that he would need to become an adult quicker than most one morning in the summer of 1970.\r\n\r\nCastillo’s dad went to work and did not come home that night.  He fell off the shrimp boat, and drowned. With two younger sisters to take care of, Castillo became the man of the house at age 11.\r\n\r\nCastillo’s mother became the sole financial provider for the family. She worked two jobs, one as a maid and the other clearing dishes at a restaurant. \r\n\r\nCastillo credits his mother for two important values: his work ethic and teaching him the importance of treating people with respect.\r\n\r\n“She was always really nice to everybody,” he said.\r\n\r\nGrowing up in the small town of Port Isabel, Texas, kids start playing football in the streets from a young age. This is where Castillo was introduced to the game of football; the game that changed his life.\r\n\r\nCastillo attended Port Isabel High School where he played on the football team as a linebacker and tight end. He wasn’t the fastest, strongest, or most talented, but he developed a work ethic that pushed him to become the first person in his family to ever graduate high school.\r\n\r\nCastillo knew he wanted to play college football, but the only school that offered him a scholarship was Monterrey Tech in Monterrey, Mexico. Although not ideal, he saw it as an opportunity.\r\n\r\nHe became a starting linebacker, but after his freshman year, the school ended its football program. Castillo’s career at Monterrey Tech was over, but he was not ready to hang up the cleats just yet.\r\n\r\nWhen he returned to Port Isabel, he reached out to his high school football coach, a former player at Texas A&M- Kingsville, named Fred Jonas, the head coach at Texas A&M-Kingsville. Jonas agreed to give Castillo a tryout.\r\n\r\n"], ["updated_at", "2015-07-17 15:34:48.584424"], ["id", 11]]
+  [1m[36m (1.9ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/articles/11
+Completed 302 Found in 14ms (ActiveRecord: 3.0ms)
+
+
+Started GET "/articles/11" for ::1 at 2015-07-17 11:34:48 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 11]]
+  [1m[36mComment Load (0.2ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 11]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered articles/show.html.erb within layouts/application (5.0ms)
+Completed 200 OK in 56ms (Views: 54.9ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles" for ::1 at 2015-07-17 11:34:54 -0400
+Processing by ArticlesController#index as HTML
+  [1m[35mArticle Load (0.3ms)[0m  SELECT "articles".* FROM "articles"
+  Rendered articles/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 72ms (Views: 71.0ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 11:38:37 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35mComment Load (0.2ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (0.6ms)
+  Rendered articles/show.html.erb within layouts/application (9.3ms)
+Completed 200 OK in 62ms (Views: 59.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles" for ::1 at 2015-07-17 11:57:34 -0400
+Processing by ArticlesController#index as HTML
+  [1m[36mArticle Load (0.6ms)[0m  [1mSELECT "articles".* FROM "articles"[0m
+  Rendered articles/index.html.erb within layouts/application (8.4ms)
+Completed 200 OK in 59ms (Views: 54.1ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/articles/8" for ::1 at 2015-07-17 11:57:36 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 8]]
+  [1m[36mComment Load (0.3ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 8]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (30.4ms)
+  Rendered articles/show.html.erb within layouts/application (40.4ms)
+Completed 500 Internal Server Error in 57ms (ActiveRecord: 0.8ms)
+
+ActionView::Template::Error (undefined method `article_comments_path' for #<#<Class:0x007f9b7a961c30>:0x007f9b79873248>):
+    1: <h3>Post a comment</h3>
+    2: <%= form_for [@article, @comment] do |f| %>
+    3: 	<p>
+    4: 		<%= f.label :author_name %> <br>
+    5: 		<%= f.text_field :author_name %>
+  app/views/comments/_form.html.erb:2:in `_app_views_comments__form_html_erb___3037264326390370122_70152846540560'
+  app/views/articles/show.html.erb:6:in `_app_views_articles_show_html_erb__2135536514004283541_70152858552620'
+
+
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (13.2ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (5.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (114.1ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (88.8ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (199.8ms)
+
+
+Started GET "/articles/8" for ::1 at 2015-07-17 11:57:37 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 8]]
+  [1m[36mComment Load (0.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 8]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (21.6ms)
+  Rendered articles/show.html.erb within layouts/application (27.3ms)
+Completed 500 Internal Server Error in 35ms (ActiveRecord: 0.3ms)
+
+ActionView::Template::Error (undefined method `article_comments_path' for #<#<Class:0x007f9b7a961c30>:0x007f9b76ff19c8>):
+    1: <h3>Post a comment</h3>
+    2: <%= form_for [@article, @comment] do |f| %>
+    3: 	<p>
+    4: 		<%= f.label :author_name %> <br>
+    5: 		<%= f.text_field :author_name %>
+  app/views/comments/_form.html.erb:2:in `_app_views_comments__form_html_erb___3037264326390370122_70152869763620'
+  app/views/articles/show.html.erb:6:in `_app_views_articles_show_html_erb__2135536514004283541_70152846541760'
+
+
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (13.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (5.8ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (113.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (93.9ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (206.3ms)
+
+
+Started GET "/articles/2" for ::1 at 2015-07-17 12:00:29 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mArticle Load (0.3ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mComment Load (0.3ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 2]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (2.8ms)
+  Rendered articles/show.html.erb within layouts/application (11.7ms)
+Completed 200 OK in 92ms (Views: 71.4ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/articles/11" for ::1 at 2015-07-17 12:00:44 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 11]]
+  [1m[36mComment Load (0.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 11]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (2.1ms)
+  Rendered articles/show.html.erb within layouts/application (9.3ms)
+Completed 200 OK in 61ms (Views: 59.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/7" for ::1 at 2015-07-17 12:02:07 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 7]]
+  [1m[36mComment Load (0.3ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 7]]
+  Rendered articles/_comment.html.erb (0.1ms)
+  Rendered comments/_form.html.erb (2.8ms)
+  Rendered articles/show.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 78ms (Views: 55.7ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/articles/1" for ::1 at 2015-07-17 12:02:20 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mComment Load (0.3ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 1]]
+  Rendered articles/_comment.html.erb (0.2ms)
+  Rendered comments/_form.html.erb (2.7ms)
+  Rendered articles/show.html.erb within layouts/application (10.4ms)
+Completed 200 OK in 83ms (Views: 60.8ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/articles/1" for ::1 at 2015-07-17 12:02:58 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mComment Load (0.3ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 1]]
+  Rendered articles/_comment.html.erb (0.9ms)
+  Rendered comments/_form.html.erb (2.6ms)
+  Rendered articles/show.html.erb within layouts/application (30.0ms)
+Completed 200 OK in 98ms (Views: 80.8ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2015-07-17 12:02:59 -0400
+
+
+Started GET "/assets/screen.self-16f83778566f2ea814368100ac8e534d7de4921c8d7334c3f01cc357b90c6547.css?body=1" for ::1 at 2015-07-17 12:02:59 -0400
+
+
+Started GET "/assets/jquery.self-d03a5518f45df77341bdbe6201ba3bfa547ebba8ed64f0ea56bfa5f96ea7c074.js?body=1" for ::1 at 2015-07-17 12:02:59 -0400
+
+
+Started GET "/assets/jquery_ujs.self-ca5248a2fad13d6bd58ea121318d642f195f0b2dd818b30615f785ff365e8d1f.js?body=1" for ::1 at 2015-07-17 12:02:59 -0400
+
+
+Started GET "/assets/articles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-07-17 12:02:59 -0400
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-07-17 12:02:59 -0400
+
+
+Started GET "/assets/articles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-07-17 12:02:59 -0400
+
+
+Started GET "/assets/application.self-3b8dabdc891efe46b9a144b400ad69e37d7e5876bdc39dee783419a69d7ca819.js?body=1" for ::1 at 2015-07-17 12:02:59 -0400
+
+
+Started GET "/" for ::1 at 2015-07-17 12:23:57 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ArticlesController#index as HTML
+  [1m[35mArticle Load (9.9ms)[0m  SELECT "articles".* FROM "articles"
+  Rendered articles/index.html.erb within layouts/application (25.8ms)
+Completed 200 OK in 747ms (Views: 711.2ms | ActiveRecord: 11.4ms)
+
+
+Started GET "/assets/comments.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-07-17 12:23:58 -0400
+
+
+Started GET "/assets/comments.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-07-17 12:23:58 -0400
+
+
+Started GET "/articles/2" for ::1 at 2015-07-17 12:24:00 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mArticle Load (0.3ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mComment Load (14.2ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 2]]
+  Rendered articles/_comment.html.erb (0.1ms)
+  Rendered comments/_form.html.erb (67.3ms)
+  Rendered articles/show.html.erb within layouts/application (140.4ms)
+Completed 200 OK in 300ms (Views: 252.2ms | ActiveRecord: 14.9ms)
+
+
+Started POST "/articles/2/comments" for ::1 at 2015-07-17 12:24:13 -0400
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"K6us0dKo4w7ILM3i83ZXmeASTeh13CnzBdBN/g8ojhS+dZiNNzZhvKWUIXm57rJoapxZVsLdJat1FBs161Vjjg==", "comment"=>{"author_name"=>"Tyler Gaugler", "body"=>"Wow this is so neat"}, "commit"=>"Submit", "article_id"=>"2"}
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms)
+
+NoMethodError (undefined method `article_id=' for nil:NilClass):
+  app/controllers/comments_controller.rb:5:in `create'
+
+
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (9.8ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (9.7ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.2ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (139.7ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (102.9ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (229.3ms)
+
+
+Started POST "/articles/2/comments" for ::1 at 2015-07-17 12:27:00 -0400
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"r0zF7vJYDfk0cyhC2aPyLtsq2GMgFb7YFweOXKoyj2g6kvGyF8aPS1nLxNmTOxffUaTM3ZcUsoBnw9iXTk9i8g==", "comment"=>{"author_name"=>"Tyler Gaugler", "body"=>"Wow this is so neat"}, "commit"=>"Submit", "article_id"=>"2"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (56.5ms)[0m  INSERT INTO "comments" ("author_name", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["author_name", "Tyler Gaugler"], ["body", "Wow this is so neat"], ["article_id", 2], ["created_at", "2015-07-17 16:27:00.373528"], ["updated_at", "2015-07-17 16:27:00.373528"]]
+  [1m[36m (14.3ms)[0m  [1mcommit transaction[0m
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 2]]
+Redirected to http://localhost:3000/articles/2
+Completed 302 Found in 102ms (ActiveRecord: 72.2ms)
+
+
+Started GET "/articles/2" for ::1 at 2015-07-17 12:27:00 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mComment Load (0.3ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 2]]
+  Rendered articles/_comment.html.erb (0.6ms)
+  Rendered comments/_form.html.erb (3.4ms)
+  Rendered articles/show.html.erb within layouts/application (12.7ms)
+Completed 200 OK in 65ms (Views: 62.6ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/articles/2/comments" for ::1 at 2015-07-17 12:27:23 -0400
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"NhEqfMEaFz/HVzf+DuTxwpFoUTHeTnekK/NZKeDjxFGjzx4gJISVjarv22VEfBQzG+ZFj2lPe/xbNw/iBJ4pyw==", "comment"=>{"author_name"=>"Freddy B", "body"=>"As a user, imagine you write a witty comment, click save, then what would you expect? Probably to see the article page, maybe automatically scrolling down to your comment"}, "commit"=>"Submit", "article_id"=>"2"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (2.3ms)[0m  INSERT INTO "comments" ("author_name", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["author_name", "Freddy B"], ["body", "As a user, imagine you write a witty comment, click save, then what would you expect? Probably to see the article page, maybe automatically scrolling down to your comment"], ["article_id", 2], ["created_at", "2015-07-17 16:27:23.913844"], ["updated_at", "2015-07-17 16:27:23.913844"]]
+  [1m[36m (2.0ms)[0m  [1mcommit transaction[0m
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 2]]
+Redirected to http://localhost:3000/articles/2
+Completed 302 Found in 12ms (ActiveRecord: 4.5ms)
+
+
+Started GET "/articles/2" for ::1 at 2015-07-17 12:27:23 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mComment Load (0.2ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 2]]
+  Rendered articles/_comment.html.erb (0.2ms)
+  Rendered comments/_form.html.erb (2.0ms)
+  Rendered articles/show.html.erb within layouts/application (8.5ms)
+Completed 200 OK in 67ms (Views: 64.9ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles" for ::1 at 2015-07-17 12:27:32 -0400
+Processing by ArticlesController#index as HTML
+  [1m[36mArticle Load (0.3ms)[0m  [1mSELECT "articles".* FROM "articles"[0m
+  Rendered articles/index.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 57ms (Views: 55.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/7" for ::1 at 2015-07-17 12:27:34 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 7]]
+  [1m[36mComment Load (0.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 7]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (2.0ms)
+  Rendered articles/show.html.erb within layouts/application (8.9ms)
+Completed 200 OK in 81ms (Views: 79.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles" for ::1 at 2015-07-17 12:27:38 -0400
+Processing by ArticlesController#index as HTML
+  [1m[35mArticle Load (0.2ms)[0m  SELECT "articles".* FROM "articles"
+  Rendered articles/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 62ms (Views: 61.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/articles/1" for ::1 at 2015-07-17 12:27:39 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mComment Load (0.3ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 1]]
+  Rendered articles/_comment.html.erb (0.9ms)
+  Rendered comments/_form.html.erb (2.5ms)
+  Rendered articles/show.html.erb within layouts/application (11.3ms)
+Completed 200 OK in 75ms (Views: 72.9ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 12:29:23 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (1.8ms)
+  Rendered articles/show.html.erb within layouts/application (10.6ms)
+Completed 200 OK in 69ms (Views: 67.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 12:29:30 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (1.8ms)
+  Rendered articles/show.html.erb within layouts/application (9.4ms)
+Completed 200 OK in 69ms (Views: 67.7ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/articles" for ::1 at 2015-07-17 12:29:32 -0400
+Processing by ArticlesController#index as HTML
+  [1m[36mArticle Load (0.3ms)[0m  [1mSELECT "articles".* FROM "articles"[0m
+  Rendered articles/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 54ms (Views: 53.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/2" for ::1 at 2015-07-17 12:29:34 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 2]]
+  [1m[35mComment Load (0.1ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 2]]
+  Rendered articles/_comment.html.erb (0.2ms)
+  Rendered comments/_form.html.erb (1.6ms)
+  Rendered articles/show.html.erb within layouts/application (9.8ms)
+Completed 200 OK in 61ms (Views: 59.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/articles" for ::1 at 2015-07-17 12:29:38 -0400
+Processing by ArticlesController#index as HTML
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT "articles".* FROM "articles"[0m
+  Rendered articles/index.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 63ms (Views: 62.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/articles/11" for ::1 at 2015-07-17 12:29:40 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 11]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 11]]
+  Rendered articles/_comment.html.erb (0.3ms)
+  Rendered comments/_form.html.erb (2.4ms)
+  Rendered articles/show.html.erb within layouts/application (10.1ms)
+Completed 200 OK in 74ms (Views: 72.3ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/articles/11/comments" for ::1 at 2015-07-17 12:29:53 -0400
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"r3QXlkL5ijIEZwEraXwvI88B2kYnAGJZwrousu7xJrY6qiPKp2cIgGnf7bAj5MrSRY/O+JABbgGyfnh5CozLLA==", "comment"=>{"author_name"=>"Tyler Gaugler", "body"=>"The comments form looks a little silly with \"Author Name\". It should probably say \"Your Name\", right? To change the text that the label helper prints out, you pass in the desired text as a second parameter, like this:"}, "commit"=>"Submit", "article_id"=>"11"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (2.3ms)[0m  [1mINSERT INTO "comments" ("author_name", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["author_name", "Tyler Gaugler"], ["body", "The comments form looks a little silly with \"Author Name\". It should probably say \"Your Name\", right? To change the text that the label helper prints out, you pass in the desired text as a second parameter, like this:"], ["article_id", 11], ["created_at", "2015-07-17 16:29:53.067204"], ["updated_at", "2015-07-17 16:29:53.067204"]]
+  [1m[35m (56.8ms)[0m  commit transaction
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 11]]
+Redirected to http://localhost:3000/articles/11
+Completed 302 Found in 65ms (ActiveRecord: 59.4ms)
+
+
+Started GET "/articles/11" for ::1 at 2015-07-17 12:29:53 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 11]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 11]]
+  [1m[35mComment Load (0.1ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 11]]
+  Rendered articles/_comment.html.erb (0.2ms)
+  Rendered comments/_form.html.erb (1.9ms)
+  Rendered articles/show.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 72ms (Views: 70.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/articles" for ::1 at 2015-07-17 12:30:02 -0400
+Processing by ArticlesController#index as HTML
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT "articles".* FROM "articles"[0m
+  Rendered articles/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 62ms (Views: 61.0ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 12:33:11 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 4]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (1.8ms)
+  Rendered articles/show.html.erb within layouts/application (10.5ms)
+Completed 200 OK in 67ms (Views: 65.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 12:33:44 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 4]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (2.6ms)
+  Rendered articles/show.html.erb within layouts/application (8.8ms)
+Completed 200 OK in 63ms (Views: 61.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/articles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-07-17 12:33:44 -0400
+
+
+Started GET "/assets/comments.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-07-17 12:33:44 -0400
+
+
+Started GET "/assets/screen.self-16f83778566f2ea814368100ac8e534d7de4921c8d7334c3f01cc357b90c6547.css?body=1" for ::1 at 2015-07-17 12:33:44 -0400
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2015-07-17 12:33:44 -0400
+
+
+Started GET "/assets/jquery.self-d03a5518f45df77341bdbe6201ba3bfa547ebba8ed64f0ea56bfa5f96ea7c074.js?body=1" for ::1 at 2015-07-17 12:33:44 -0400
+
+
+Started GET "/assets/jquery_ujs.self-ca5248a2fad13d6bd58ea121318d642f195f0b2dd818b30615f785ff365e8d1f.js?body=1" for ::1 at 2015-07-17 12:33:44 -0400
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-07-17 12:33:44 -0400
+
+
+Started GET "/assets/articles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-07-17 12:33:44 -0400
+
+
+Started GET "/assets/comments.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-07-17 12:33:44 -0400
+
+
+Started GET "/assets/application.self-3b8dabdc891efe46b9a144b400ad69e37d7e5876bdc39dee783419a69d7ca819.js?body=1" for ::1 at 2015-07-17 12:33:44 -0400
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 12:34:05 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 4]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (1.8ms)
+  Rendered articles/show.html.erb within layouts/application (7.5ms)
+Completed 200 OK in 76ms (Views: 74.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/articles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-07-17 12:34:06 -0400
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2015-07-17 12:34:06 -0400
+
+
+Started GET "/assets/articles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-07-17 12:34:06 -0400
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-07-17 12:34:06 -0400
+
+
+Started GET "/assets/jquery.self-d03a5518f45df77341bdbe6201ba3bfa547ebba8ed64f0ea56bfa5f96ea7c074.js?body=1" for ::1 at 2015-07-17 12:34:06 -0400
+
+
+Started GET "/assets/application.self-3b8dabdc891efe46b9a144b400ad69e37d7e5876bdc39dee783419a69d7ca819.js?body=1" for ::1 at 2015-07-17 12:34:06 -0400
+
+
+Started GET "/assets/jquery_ujs.self-ca5248a2fad13d6bd58ea121318d642f195f0b2dd818b30615f785ff365e8d1f.js?body=1" for ::1 at 2015-07-17 12:34:06 -0400
+
+
+Started GET "/assets/screen.self-16f83778566f2ea814368100ac8e534d7de4921c8d7334c3f01cc357b90c6547.css?body=1" for ::1 at 2015-07-17 12:34:06 -0400
+
+
+Started GET "/assets/comments.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-07-17 12:34:06 -0400
+
+
+Started GET "/assets/comments.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-07-17 12:34:06 -0400
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 12:36:17 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 4]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (1.2ms)
+  Rendered articles/show.html.erb within layouts/application (8.3ms)
+Completed 200 OK in 69ms (Views: 67.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/articles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-07-17 12:36:18 -0400
+
+
+Started GET "/assets/comments.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-07-17 12:36:18 -0400
+
+
+Started GET "/assets/screen.self-16f83778566f2ea814368100ac8e534d7de4921c8d7334c3f01cc357b90c6547.css?body=1" for ::1 at 2015-07-17 12:36:18 -0400
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2015-07-17 12:36:18 -0400
+
+
+Started GET "/assets/jquery.self-d03a5518f45df77341bdbe6201ba3bfa547ebba8ed64f0ea56bfa5f96ea7c074.js?body=1" for ::1 at 2015-07-17 12:36:18 -0400
+
+
+Started GET "/assets/jquery_ujs.self-ca5248a2fad13d6bd58ea121318d642f195f0b2dd818b30615f785ff365e8d1f.js?body=1" for ::1 at 2015-07-17 12:36:18 -0400
+
+
+Started GET "/assets/comments.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-07-17 12:36:18 -0400
+
+
+Started GET "/assets/articles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-07-17 12:36:18 -0400
+
+
+Started GET "/assets/application.self-3b8dabdc891efe46b9a144b400ad69e37d7e5876bdc39dee783419a69d7ca819.js?body=1" for ::1 at 2015-07-17 12:36:18 -0400
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-07-17 12:36:18 -0400
+
+
+Started POST "/articles/4/comments" for ::1 at 2015-07-17 12:36:45 -0400
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"DhV5Lf9CnX31tCBbnAF9gGBS9Z5mJ0G+AFAQxKfcwY+by01xGtwfz5gMzMDWmZhx6tzhINEmTeZwlEYPQ6EsFQ==", "comment"=>{"author_name"=>"Yeezy", "body"=>"The inside details about the forging of Dez Bryant's contract are out, but before we get to that, Dallas owner Jerry Jones has to elaborate on the time he was almost punched by his son, Stephen, the team's executive vice president."}, "commit"=>"Submit", "article_id"=>"4"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (1.8ms)[0m  [1mINSERT INTO "comments" ("author_name", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["author_name", "Yeezy"], ["body", "The inside details about the forging of Dez Bryant's contract are out, but before we get to that, Dallas owner Jerry Jones has to elaborate on the time he was almost punched by his son, Stephen, the team's executive vice president."], ["article_id", 4], ["created_at", "2015-07-17 16:36:45.256755"], ["updated_at", "2015-07-17 16:36:45.256755"]]
+  [1m[35m (2.1ms)[0m  commit transaction
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 4]]
+Redirected to http://localhost:3000/articles/4
+Completed 302 Found in 9ms (ActiveRecord: 4.2ms)
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 12:36:45 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 4]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 4]]
+  [1m[35mComment Load (0.2ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (2.7ms)
+  Rendered articles/show.html.erb within layouts/application (10.4ms)
+Completed 500 Internal Server Error in 19ms (ActiveRecord: 0.5ms)
+
+SyntaxError (/Volumes/DATA/the_odin_project/blogger/app/views/articles/_comment.html.erb:6: syntax error, unexpected keyword_ensure, expecting ')'
+/Volumes/DATA/the_odin_project/blogger/app/views/articles/_comment.html.erb:8: syntax error, unexpected keyword_end, expecting ')'):
+  app/views/articles/_comment.html.erb:6: syntax error, unexpected keyword_ensure, expecting ')'
+  app/views/articles/_comment.html.erb:8: syntax error, unexpected keyword_end, expecting ')'
+  app/views/articles/show.html.erb:5:in `_app_views_articles_show_html_erb__2679255519924093464_70359840359640'
+
+
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (13.9ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (5.5ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/actionpack-4.2.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (138.9ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (1.3ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (109.7ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.6ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.7ms)
+  Rendered /Users/tylergaugler/.rvm/gems/ruby-2.2.1/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (315.9ms)
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 12:37:00 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 4]]
+  [1m[36mComment Load (0.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (1.6ms)
+  Rendered comments/_form.html.erb (1.6ms)
+  Rendered articles/show.html.erb within layouts/application (14.3ms)
+Completed 200 OK in 85ms (Views: 82.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/assets/articles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-07-17 12:37:01 -0400
+
+
+Started GET "/assets/screen.self-16f83778566f2ea814368100ac8e534d7de4921c8d7334c3f01cc357b90c6547.css?body=1" for ::1 at 2015-07-17 12:37:01 -0400
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2015-07-17 12:37:01 -0400
+
+
+Started GET "/assets/comments.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-07-17 12:37:01 -0400
+
+
+Started GET "/assets/jquery.self-d03a5518f45df77341bdbe6201ba3bfa547ebba8ed64f0ea56bfa5f96ea7c074.js?body=1" for ::1 at 2015-07-17 12:37:01 -0400
+
+
+Started GET "/assets/jquery_ujs.self-ca5248a2fad13d6bd58ea121318d642f195f0b2dd818b30615f785ff365e8d1f.js?body=1" for ::1 at 2015-07-17 12:37:01 -0400
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-07-17 12:37:01 -0400
+
+
+Started GET "/assets/articles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-07-17 12:37:01 -0400
+
+
+Started GET "/assets/comments.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-07-17 12:37:01 -0400
+
+
+Started GET "/assets/application.self-3b8dabdc891efe46b9a144b400ad69e37d7e5876bdc39dee783419a69d7ca819.js?body=1" for ::1 at 2015-07-17 12:37:01 -0400
+
+
+Started GET "/articles" for ::1 at 2015-07-17 12:37:14 -0400
+Processing by ArticlesController#index as HTML
+  [1m[35mArticle Load (0.4ms)[0m  SELECT "articles".* FROM "articles"
+  Rendered articles/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 432ms (Views: 431.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/articles/11" for ::1 at 2015-07-17 12:37:17 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 11]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 11]]
+  [1m[36mComment Load (0.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 11]]
+  Rendered articles/_comment.html.erb (1.1ms)
+  Rendered comments/_form.html.erb (2.1ms)
+  Rendered articles/show.html.erb within layouts/application (11.5ms)
+Completed 200 OK in 68ms (Views: 66.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/articles/new" for ::1 at 2015-07-17 12:37:20 -0400
+Processing by ArticlesController#new as HTML
+  Rendered articles/_form.html.erb (3.2ms)
+  Rendered articles/new.html.erb within layouts/application (17.8ms)
+Completed 200 OK in 129ms (Views: 128.2ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/articles" for ::1 at 2015-07-17 12:37:46 -0400
+Processing by ArticlesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"f47ZHBAwdjzh2KzMQaPnqPnJroBvSisfJ2vq650B9yTqUO1A9a70joxgQFcLOwJZc0e6PthLJ0dXr7wgeXwavg==", "article"=>{"title"=>"No 'Dez rules' in new contract, Jerry Jones says", "body"=>"The contract has no \"Dez Rules,\" according to The Dallas Morning News, meaning that there are no real restrictions on Bryant off the field. In the past, Jones has taken extreme measures to ensure that Bryant is on his best behavior. Why not now?\r\n\r\n\"That was made possible by Roc Nation and Jay-Z,\" Jones said. \"Now I know you said, 'Boy, aren't we mixing the chickens and eagles here?' No. Jay-Z certainly is a great example there. He's obviously very astute and not just talented and he has in his or he has in his plan a really ask several people of the different disciplines of music many different disciplines that are outstanding. Then he wants to have them and advise them on how they handle their affairs. He's outstanding.\"\r\n\r\nAlso, according to Jones, the main rub in negotiations were previous deals signed by Larry Fitzgerald (eight years, $120 million) and Calvin Johnson (eight years, $150.5). Johnson and Fitzgerald are both players drafted before the new collective bargaining agreement, which made the situation tricky.\r\n\r\n\"They were problematic,\" he said. \"They did set a false financial perspective as it relates to the NFL pay structure. That was a big part of this issue, and that was part of the challenge as late as 3 o'clock in the morning Tuesday night.\"\r\n\r\nThe rest of the interview is well worth checking out, if only for more Jerry Jones-Roc Nation love."}, "commit"=>"Create Article"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (2.0ms)[0m  [1mINSERT INTO "articles" ("title", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["title", "No 'Dez rules' in new contract, Jerry Jones says"], ["body", "The contract has no \"Dez Rules,\" according to The Dallas Morning News, meaning that there are no real restrictions on Bryant off the field. In the past, Jones has taken extreme measures to ensure that Bryant is on his best behavior. Why not now?\r\n\r\n\"That was made possible by Roc Nation and Jay-Z,\" Jones said. \"Now I know you said, 'Boy, aren't we mixing the chickens and eagles here?' No. Jay-Z certainly is a great example there. He's obviously very astute and not just talented and he has in his or he has in his plan a really ask several people of the different disciplines of music many different disciplines that are outstanding. Then he wants to have them and advise them on how they handle their affairs. He's outstanding.\"\r\n\r\nAlso, according to Jones, the main rub in negotiations were previous deals signed by Larry Fitzgerald (eight years, $120 million) and Calvin Johnson (eight years, $150.5). Johnson and Fitzgerald are both players drafted before the new collective bargaining agreement, which made the situation tricky.\r\n\r\n\"They were problematic,\" he said. \"They did set a false financial perspective as it relates to the NFL pay structure. That was a big part of this issue, and that was part of the challenge as late as 3 o'clock in the morning Tuesday night.\"\r\n\r\nThe rest of the interview is well worth checking out, if only for more Jerry Jones-Roc Nation love."], ["created_at", "2015-07-17 16:37:46.910012"], ["updated_at", "2015-07-17 16:37:46.910012"]]
+  [1m[35m (2.1ms)[0m  commit transaction
+Redirected to http://localhost:3000/articles/12
+Completed 302 Found in 10ms (ActiveRecord: 4.2ms)
+
+
+Started GET "/articles/12" for ::1 at 2015-07-17 12:37:46 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 12]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 12]]
+  Rendered articles/_comment.html.erb (0.0ms)
+  Rendered comments/_form.html.erb (1.5ms)
+  Rendered articles/show.html.erb within layouts/application (8.1ms)
+Completed 200 OK in 73ms (Views: 70.9ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/articles/12/comments" for ::1 at 2015-07-17 12:38:05 -0400
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"tzRGl+S09aIdFU3cAAwXhUDjhTzohV+j8tUKb6UgLvsi6nLLASp3EHCtoUdKlPJ0ym2Rgl+EU/uCEVykQV3DYQ==", "comment"=>{"author_name"=>"Alan", "body"=>"I think Cowboys fans are really lucky they landed this guy he's no prima donna receiver\r\nThis guy wants to win you can have enough guys like this on your team congratulations wish he was on the patriots"}, "commit"=>"Submit", "article_id"=>"12"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (1.9ms)[0m  INSERT INTO "comments" ("author_name", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["author_name", "Alan"], ["body", "I think Cowboys fans are really lucky they landed this guy he's no prima donna receiver\r\nThis guy wants to win you can have enough guys like this on your team congratulations wish he was on the patriots"], ["article_id", 12], ["created_at", "2015-07-17 16:38:05.960596"], ["updated_at", "2015-07-17 16:38:05.960596"]]
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 12]]
+Redirected to http://localhost:3000/articles/12
+Completed 302 Found in 11ms (ActiveRecord: 4.3ms)
+
+
+Started GET "/articles/12" for ::1 at 2015-07-17 12:38:05 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 12]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 12]]
+  [1m[36mComment Load (0.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 12]]
+  Rendered articles/_comment.html.erb (0.7ms)
+  Rendered comments/_form.html.erb (1.6ms)
+  Rendered articles/show.html.erb within layouts/application (9.9ms)
+Completed 200 OK in 72ms (Views: 70.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/articles" for ::1 at 2015-07-17 12:38:17 -0400
+Processing by ArticlesController#index as HTML
+  [1m[35mArticle Load (0.3ms)[0m  SELECT "articles".* FROM "articles"
+  Rendered articles/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 57ms (Views: 56.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/4" for ::1 at 2015-07-17 12:38:41 -0400
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 4]]
+  [1m[36mComment Load (0.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 4]]
+  Rendered articles/_comment.html.erb (0.4ms)
+  Rendered comments/_form.html.erb (1.4ms)
+  Rendered articles/show.html.erb within layouts/application (11.1ms)
+Completed 200 OK in 67ms (Views: 65.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/articles" for ::1 at 2015-07-17 12:38:54 -0400
+Processing by ArticlesController#index as HTML
+  [1m[35mArticle Load (0.3ms)[0m  SELECT "articles".* FROM "articles"
+  Rendered articles/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 60ms (Views: 59.2ms | ActiveRecord: 0.3ms)
